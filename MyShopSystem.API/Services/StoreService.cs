@@ -11,7 +11,6 @@ namespace MyShopSystem.API.Services
         {
             var newEntity = new Store()
             {
-                Id = createStore.Id,
                 Name = createStore.Name,
                 Location = createStore.Location,
                 BranchId = createStore.BranchId,

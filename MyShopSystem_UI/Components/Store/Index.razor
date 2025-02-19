@@ -1,0 +1,62 @@
+﻿@page "/store/"
+@using Commons.Models.StoreDTO
+@using MyShopSystem_UI.Service
+@inject IStoreService storeService
+@inject NavigationManager navigation
+
+<div class="d-flex justify-content-between">
+	<h3>Magazinlar</h3>
+	<a class="btn btn-primary" href="/store/create">Create</a>
+</div>
+
+@if(store == null)
+{
+	<p>Yuklanmoqda...</p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Location</th>
+				<th>BranchId</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var stories in store)
+			{
+				<tr>
+					<td>@stories.Id</td>
+					<td>@stories.Name</td>
+					<td>@stories.Location</td>
+					<td>@stories.BranchId</td>
+					<td>
+						<button class="btn btn-primary" @onclick="() =>EditStore(stories.Id)">Edit</button>
+						<button class="btn btn-primary" @onclick="() =>DeleteStore(stories.Id)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code{
+	private List<GetStoreListDTO> store = [];
+
+	protected override async Task OnInitializedAsync()
+	{
+		store = await storeService.GetAllStore();
+	}
+	private void EditStore(int Id)
+	{
+		navigation.NavigateTo($"/store/edit/{Id}");
+	}
+	private async Task DeleteStore(int Id)
+	{
+		await storeService.DeleteStore(Id);
+		store = await storeService.GetAllStore();
+	}
+}
