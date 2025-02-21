@@ -1,0 +1,61 @@
+﻿@page "/order"
+@using Commons.Models.OrderDTO
+@using MyShopSystem_UI.Service
+@inject IOrderService orderService
+@inject NavigationManager navigation
+
+<div class="d-flex justify-content-between">
+    <h3>Order</h3>
+    <a class="btn btn-primary" href="/order/create">Create</a>
+</div>
+
+@if (orders == null)
+{
+    <p>Yuklanmoqda...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>StoreId</th>
+                <th>OrderDate</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.StoreId</td>
+                    <td>@order.OrderDate</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditOrder(order.Id)">Edit</button>
+                        <button class="btn btn-primary" @onclick="() => DeleteOrder(order.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<GetOrderListDTO> orders = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await orderService.GetAllOrder();
+    }
+    private void EditOrder(int Id)
+    {
+        navigation.NavigateTo($"/order/edit/{Id}");
+    }
+    private async Task DeleteOrder(int Id)
+    {
+        await orderService.DeleteOrder(Id);
+        orders = await orderService.GetAllOrder();
+    }
+
+}

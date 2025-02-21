@@ -1,0 +1,61 @@
+﻿@page "/delivery"
+@using Commons.Models.DeliveryDTO
+@using MyShopSystem_UI.Service
+@inject IDeliveryServise deliveryService
+@inject NavigationManager navigation
+
+<div class="d-flex justify-content-between">
+    <h3>Delivery</h3>
+    <a class="btn btn-primary" href="/delivery/create">Create</a>
+</div>
+
+@if (delivery == null)
+{
+    <p>Yuklanmoqda...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var deliverys in delivery)
+            {
+                <tr>
+                    <td>@deliverys.WarehouseId</td>
+                    <td>@deliverys.StoreId</td>
+                    <td>@deliverys.DeliveryDate</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditDelivery(deliverys.Id)">Edit</button>
+                        <button class="btn btn-primary" @onclick="() => DeleteDelivery(deliverys.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<GetDeliveryListDTO> delivery = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        delivery = await deliveryService.GetAllDelivery();
+    }
+    private void EditDelivery(int Id)
+    {
+        navigation.NavigateTo($"/delivery/edit/{Id}");
+    }
+    private async Task DeleteDelivery(int Id)
+    {
+        await deliveryService.DeleteDelivery(Id);
+        delivery = await deliveryService.GetAllDelivery();
+    }
+
+}

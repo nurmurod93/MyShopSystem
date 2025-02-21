@@ -4,9 +4,8 @@ using MyShopSystem.API.Services.Intefaceis;
 
 namespace MyShopSystem.API.Controllers
 {
-    [ApiController]
-    [Route("Api[controller]/[action]")]
-    public class BranchController(IBranchService branchService) : ControllerBase
+    
+    public class BranchController(IBranchService branchService) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<List<GetBranchListDTO>>> GetAllBranch()

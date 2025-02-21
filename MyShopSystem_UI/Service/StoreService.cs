@@ -16,36 +16,36 @@ namespace MyShopSystem_UI.Service
         private readonly string _baseUrl = configuration["BackendUrl"] + "/store"; 
         public async Task<GetStoreDTO> CreateStore(CreateStoreDTO createStore)
         {
-            var responce = await client.PostAsJsonAsync(_baseUrl + "/AddStore", createStore);
-            responce.EnsureSuccessStatusCode();
-            return await responce.Content.ReadFromJsonAsync<GetStoreDTO>();
+            var response = await client.PostAsJsonAsync(_baseUrl + "/AddStore", createStore);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<GetStoreDTO>();
         }
 
         public async Task DeleteStore(int Id)
         {
-            var responce = await client.DeleteAsync($"{_baseUrl}/DeleteStore/{Id}");
-            responce.EnsureSuccessStatusCode();
+            var response = await client.DeleteAsync($"{_baseUrl}/DeleteStore/{Id}");
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task<List<GetStoreListDTO>> GetAllStore()
         {
-            var responce = await client.GetAsync(_baseUrl + "/GetAllStore");
-            responce.EnsureSuccessStatusCode();
-            var data = await responce.Content.ReadFromJsonAsync<List<GetStoreListDTO>>();
+            var response = await client.GetAsync(_baseUrl + "/GetAllStore");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadFromJsonAsync<List<GetStoreListDTO>>();
             return data;
         }
 
         public async Task<GetStoreDTO> GetStore(int Id)
         {
-            var responce = await client.GetAsync($"{_baseUrl}/GetStore/{Id}");
-            responce.EnsureSuccessStatusCode();
-            return await responce.Content.ReadFromJsonAsync<GetStoreDTO>();
+            var response = await client.GetAsync($"{_baseUrl}/GetStore/{Id}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<GetStoreDTO>();
         }
 
         public async Task UpdateStore(GetStoreDTO updateStore)
         {
-            var responce = await client.PutAsJsonAsync($"{_baseUrl}/UpdateStore", updateStore);
-            responce.EnsureSuccessStatusCode();
+            var response = await client.PutAsJsonAsync($"{_baseUrl}/UpdateStore", updateStore);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

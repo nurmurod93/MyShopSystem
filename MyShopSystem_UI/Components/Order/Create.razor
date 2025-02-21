@@ -1,0 +1,36 @@
+﻿@page "/order/create"
+@using Commons.Models.OrderDTO
+@using MyShopSystem_UI.Service
+@inject IOrderService orderService;
+@inject NavigationManager navigation
+
+<div class="card p-3 mt-3">
+	<h4>Create Product</h4>
+	<div class="form-group">
+		<label for="storeId">StoreId</label>
+		<input id="storeId" class="form-control" @bind="newOrder.StoreId"/>
+	</div>
+	<div class="form-group">
+		<label for="orderDate">OrderDate</label>
+		<input id="orderDate" class="form-control" @bind="newOrder.OrderDate"/>
+	</div>
+	<div class="mt-3">
+		<button class="btn btn-success" @onclick="CreateOrder">Save</button>
+		<a class="btn btn-secondary" href="/order">Cancel</a>
+	</div>
+</div>
+
+
+@code {
+	private CreateOrderDTO newOrder = new CreateOrderDTO();
+
+	protected override async Task OnInitializedAsync()
+	{
+
+	}
+	private async Task CreateOrder()
+	{
+		var result = await orderService.CreateOrder(newOrder);
+		navigation.NavigateTo("/order");
+	}
+}

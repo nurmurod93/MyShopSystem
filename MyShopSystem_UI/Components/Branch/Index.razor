@@ -1,0 +1,61 @@
+﻿@page "/branch"
+@using Commons.Models.BranchDTO
+@using MyShopSystem_UI.Service
+@inject IBranchService branchService
+@inject NavigationManager navigation
+
+<div class="d-flex justify-content-between">
+	<h3>Branch</h3>
+	<a class="btn btn-primary" href="/branch/create">Create</a>
+</div>
+
+@if(branch == null)
+{
+	<p>Yuklanmoqda</p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Location</th>
+				<th>CompanyId</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var branches in branch)
+			{
+				<tr>
+					<td>@branches.Id</td>
+					<td>@branches.Name</td>
+					<td>@branches.Location</td>
+					<td>@branches.CompanyId</td>
+					<td>
+						<button class="btn btn-primary" @onclick="() => EditBranch(branches.Id)">Edit</button>
+						<button class="btn btn-primary" @onclick="() => DeleteBranch(branches.Id)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code{
+	private List<GetBranchListDTO> branch = [];
+
+	protected override async Task OnInitializedAsync()
+	{
+		branch = await branchService.GetAllBranch();
+	}
+	private void EditBranch(int Id)
+	{
+		navigation.NavigateTo($"/branch/edit/{Id}");
+	}
+	private async Task DeleteBranch(int Id)
+	{
+		await branchService.DeleteBranch(Id);
+		branch = await branchService.GetAllBranch();
+	}
+}

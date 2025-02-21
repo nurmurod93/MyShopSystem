@@ -1,0 +1,43 @@
+﻿@page "/delivery/edit/{Id:int}"
+@using Commons.Models.DeliveryDTO
+@using MyShopSystem_UI.Service
+@inject IDeliveryServise deliveryService;
+@inject NavigationManager navigation;
+
+<h3>Edit Delivery</h3>
+
+@if (delivery != null)
+{
+	<div class="form-group">
+		<label for="warehouseId">WarehouseId</label>
+		<input id="warehouseId" class="form-control" @bind="delivery.WarehouseId" />
+	</div>
+	<div class="form-group">
+		<label for="storeId">StoreId</label>
+		<input id="storeId" class="form-control" @bind="delivery.StoreId" />
+	</div>
+	<div class="mt-3">
+		<button class="btn btn-success" @onclick="UpdateProduct">Update</button>
+		<a class="btn btn-secondary" href="/delivery">Cancel</a>
+	</div>
+}
+
+@code {
+	[Parameter] public int Id { get; set; }
+	private GetDeliveryDTO delivery { get; set; } = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+
+	}
+	protected override async Task OnParametersSetAsync()
+	{
+		delivery = await deliveryService.GetDeliveryById(Id);
+		StateHasChanged();
+	}
+	private async Task UpdateProduct()
+	{
+		await deliveryService.UpdateDelivery(delivery);
+		navigation.NavigateTo("/delivery");
+	}
+}

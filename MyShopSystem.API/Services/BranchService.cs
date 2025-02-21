@@ -50,6 +50,7 @@ namespace MyShopSystem.API.Services
                     Id = branches.Id,
                     Name = branches.Name,
                     Location = branches.Location,
+                    CompanyId= branches.CompanyId, // Bu yerda Company Id qaytariladi bu yer qaytariladigan joy
                 });
             }
             return allBranch;
@@ -78,8 +79,9 @@ namespace MyShopSystem.API.Services
             {
                 old.Name = branch.Name;
                 old.Location = branch.Location;
+                old.CompanyId = branch.CompanyId; //CompanyId ham yangilanadi
 
-                context.Branches.Remove(old);
+                context.Branches.Update(old);
                 await context.SaveChangesAsync();
             }
         }

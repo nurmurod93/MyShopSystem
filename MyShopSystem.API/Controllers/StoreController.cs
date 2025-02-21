@@ -5,7 +5,7 @@ using MyShopSystem.API.Services.Intefaceis;
 namespace MyShopSystem.API.Controllers
 {
     [ApiController]
-    [Route("Api[controller]/[action]")]
+    [Route("Api/[controller]/[action]")]
     public class StoreController(IStoreService storeService) : ControllerBase
     {
         [HttpGet]

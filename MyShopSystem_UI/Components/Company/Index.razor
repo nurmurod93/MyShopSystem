@@ -1,0 +1,60 @@
+﻿@page "/company"
+@using Commons.Models.CompanyDTO
+@using MyShopSystem_UI.Service
+
+@inject ICompanyService companyService
+@inject NavigationManager navigation
+
+<div class="d-flex justify-content-between">
+    <h3>Kompaniyalar</h3>
+    <a class="btn btn-primary" href="/company/create">Create</a>
+</div>
+
+@if (getCompanies == null)
+{
+    <p>Yuklanmoqda...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in getCompanies)
+            {
+                <tr>
+                    <td>@company.Id</td>
+                    <td>@company.Name</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditCompany(company.Id)">Edit</button>
+                        <button class="btn btn-primary" @onclick="() => DeleteCompany(company.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code{
+	private List<GetCompanyListDTO> getCompanies  = [];
+
+	protected override async Task OnInitializedAsync()
+	{
+		getCompanies = await companyService.GetAllCompany();
+	}
+	private void EditCompany(int Id)
+	{
+		navigation.NavigateTo($"/company/edit/{Id}");
+	}
+	private async Task DeleteCompany( int Id)
+	{
+		await companyService.DeleteCompany(Id);
+		getCompanies = await companyService.GetAllCompany();
+	}
+
+}

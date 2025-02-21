@@ -1,0 +1,36 @@
+﻿@page "/branch/create"
+@using Commons.Models.BranchDTO
+@using MyShopSystem_UI.Service
+@inject IBranchService branchService;
+@inject NavigationManager navigation
+
+<div class="card p-3 mt-3">
+	<h4>Create Branch</h4>
+	<div class="form-group">
+		<label for="name">Name</label>
+		<input id="name" class="form-control" @bind="newBranch.Name"/>
+	</div>
+	<div class="form-group">
+		<label for="location">Location</label>
+		<input id="location" class="form-control" @bind="newBranch.Location"/>
+	</div>
+	<div class="mt-3">
+		<button class="btn btn-success" @onclick="CreateBranch">Save</button>
+		<a class="btn btn-secondary" href="/products">Cancel</a>
+	</div>
+</div>
+
+
+@code {
+	private CreateBranchDTO newBranch = new CreateBranchDTO();
+
+	protected override async Task OnInitializedAsync()
+	{
+
+	}
+	private async Task CreateBranch()
+	{
+		var result = await branchService.CreateBranch(newBranch);
+		navigation.NavigateTo("/branch");
+	}
+}

@@ -1,0 +1,31 @@
+﻿@page "/company/create"
+@using Commons.Models.CompanyDTO
+@using MyShopSystem_UI.Service
+@inject ICompanyService companyService
+@inject NavigationManager navigation
+
+<div class="card p-3 mt-3">
+	<h4>Create Company</h4>
+	<div class="form-group">
+		<label for="name">Name</label>
+		<input id="name" class="form-control" @bind="newCompany.Name"/>
+	</div>
+	<div class="mt-3">
+		<button class="btn btn-success" @onclick="CreateCompany">Save</button>
+		<a class="btn btn-secondary" href="/company">Cancel</a>
+	</div>
+</div>
+
+@code{
+	private CreateCompanyDTO newCompany = new CreateCompanyDTO();
+
+	protected override async Task OnInitializedAsync()
+	{
+
+	}
+	private async Task CreateCompany()
+	{
+		var result = await companyService.CreateCompany(newCompany);
+		navigation.NavigateTo("/company");
+	}
+}

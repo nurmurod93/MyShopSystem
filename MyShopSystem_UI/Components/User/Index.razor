@@ -1,0 +1,63 @@
+﻿@page "/user"
+@using Commons.Models.UserDTO
+@using MyShopSystem_UI.Service
+@inject IUserService userService
+@inject NavigationManager navigation
+
+<div class="d-flex justify-content-between">
+    <h3>Maxsulotlar</h3>
+    <a class="btn btn-primary" href="/user/create">Create</a>
+</div>
+
+@if (users == null)
+{
+    <p>Yuklanmoqda...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>UserName</th>
+                <th>PasswordHash</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Username</td>
+                    <td>@user.PasswordHash</td>
+                    <td>@user.Role</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditUser(user.Id)">Edit</button>
+                        <button class="btn btn-primary" @onclick="() => DeleteUser(user.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<GetUserListDTO> users = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userService.GetAllUser();
+    }
+    private void EditUser(int Id)
+    {
+        navigation.NavigateTo($"/user/edit/{Id}");
+    }
+    private async Task DeleteUser(int Id)
+    {
+        await userService.DeleteUser(Id);
+        users = await userService.GetAllUser();
+    }
+
+}
