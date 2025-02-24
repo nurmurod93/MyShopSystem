@@ -24,6 +24,7 @@ namespace MyShopSystem.API.Services
                 Id = newEntity.Id,
                 Name = newEntity.Name,
                 Location = newEntity.Location,
+                CompanyId = newEntity.CompanyId
             };
         }
 
@@ -66,6 +67,7 @@ namespace MyShopSystem.API.Services
                     Id = data.Id,
                     Name = data.Name,
                     Location = data.Location,
+                    CompanyId= data.CompanyId,
                 };
             }
             else

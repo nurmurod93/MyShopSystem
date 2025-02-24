@@ -4,9 +4,8 @@ using MyShopSystem.API.Services.Intefaceis;
 
 namespace MyShopSystem.API.Controllers
 {
-    [ApiController]
-    [Route("Api[controller]/[action]")]
-    public class DeliveryController(IDeliveryService deliveryService) : ControllerBase
+    
+    public class DeliveryController(IDeliveryService deliveryService) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<GetDeliveryListDTO>> GetAllDelivery()

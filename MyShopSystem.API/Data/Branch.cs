@@ -9,10 +9,11 @@ namespace MyShopSystem.API.Data
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Location { get; set; } = string.Empty;
+        // Filial qaysi kompaniyaga tegishli?
         public int CompanyId { get; set; }
-
+        public ICollection<Warehouse> Warehouse { get; set; } = new List<Warehouse>();
         [ForeignKey("CompanyId")]
-        public Company Company { get; set; } = null!;
-        public ICollection<Store> Stores { get; set; } = new List<Store>();
+        public virtual Company Company { get; set; }
+        public virtual ICollection<Store> Stores { get; set; }
     }
 }

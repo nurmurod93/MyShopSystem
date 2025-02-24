@@ -24,7 +24,7 @@ namespace MyShopSystem.API.Controllers
             return Ok(branch);
         }
         [HttpPost]
-        public async Task<ActionResult<GetBranchDTO>> AddBranch([FromBody] CreateBranchDTO createBranch)
+        public async Task<ActionResult<GetBranchDTO>> CreateBranch([FromBody] CreateBranchDTO createBranch)
         {
             var newBranch = await branchService.CreateBranch(createBranch);
             return Ok(newBranch);

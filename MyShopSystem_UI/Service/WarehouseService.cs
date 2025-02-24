@@ -16,7 +16,7 @@ namespace MyShopSystem_UI.Service
         private readonly string _baseUrl = configuration["BackendUrl"] + "/warehouse";
         public async Task<GetWarehouseDTO> CreateWarehouse(CreateWarehouseDTO createWarehouse)
         {
-            var response = await client.PostAsJsonAsync(_baseUrl + "CreateWarehouse", createWarehouse);
+            var response = await client.PostAsJsonAsync(_baseUrl + "/CreateWarehouse", createWarehouse);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<GetWarehouseDTO>();
         }
@@ -30,7 +30,7 @@ namespace MyShopSystem_UI.Service
 
         public async Task<List<GetWarehouseListDTO>> GetAllWarehouse()
         {
-            var response = await client.GetAsync(_baseUrl + "/GetAlWarehouse");
+            var response = await client.GetAsync(_baseUrl + "/GetAllWarehouse");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadFromJsonAsync<List<GetWarehouseListDTO>>();
             return data;

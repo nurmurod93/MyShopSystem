@@ -11,9 +11,9 @@ namespace MyShopSystem.API.Services
         {
             var newEntity = new Warehouse()
             {
-                Id = createWarehouse.Id,
                 Name = createWarehouse.Name,
                 Location = createWarehouse.Location,
+                BranchId = createWarehouse.BranchId // Branch bilan bog‘lash
             };
             var entry = await context.Warehouses.AddAsync(newEntity);
             await context.SaveChangesAsync();
@@ -23,6 +23,7 @@ namespace MyShopSystem.API.Services
                 Id = newEntity.Id,
                 Name = newEntity.Name,
                 Location = newEntity.Location,
+                BranchId = newEntity.BranchId
             };
         }
 
@@ -48,6 +49,7 @@ namespace MyShopSystem.API.Services
                     Id = warehouse.Id,
                     Name = warehouse.Name,
                     Location = warehouse.Location,
+                    BranchId = warehouse.BranchId // BranchId qo‘shildi
                 });
             }
             return allWarehouse;
@@ -63,6 +65,7 @@ namespace MyShopSystem.API.Services
                     Id = data.Id,
                     Name = data.Name,
                     Location = data.Location,
+                    BranchId = data.BranchId
                 };
             }
             else
@@ -76,6 +79,7 @@ namespace MyShopSystem.API.Services
             {
                 old.Name = updateWarehouse.Name;
                 old.Location = updateWarehouse.Location;
+                old.BranchId = updateWarehouse.BranchId;
 
                 context.Warehouses.Update(old);
                 await context.SaveChangesAsync();

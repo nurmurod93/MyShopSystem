@@ -8,6 +8,7 @@ namespace MyShopSystem.API.Data
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public ICollection<Branch> Branches { get; set; } = new List<Branch>();
+        public ICollection<Warehouse> Warehouses { get; set; } = new List<Warehouse>();
     }
 }
 

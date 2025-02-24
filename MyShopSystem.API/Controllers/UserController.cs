@@ -4,9 +4,7 @@ using MyShopSystem.API.Services.Intefaceis;
 
 namespace MyShopSystem.API.Controllers
 {
-    [ApiController]
-    [Route("Api[controller]/[action]")]
-    public class UserController(IUserService userService) : ControllerBase
+    public class UserController(IUserService userService) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<List<GetUserListDTO>>> GetAllUser()

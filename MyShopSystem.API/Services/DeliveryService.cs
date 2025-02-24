@@ -14,7 +14,6 @@ namespace MyShopSystem.API.Services
                 WarehouseId = delivery.WarehouseId,
                 StoreId = delivery.StoreId,
                 DeliveryDate = delivery.DeliveryDate,
-
             };
 
             var entry = await context.Deliveries.AddAsync(newEntry);

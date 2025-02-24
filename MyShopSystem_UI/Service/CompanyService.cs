@@ -17,7 +17,7 @@ namespace MyShopSystem_UI.Service
         private readonly string _baseUrl = configuration["BackendUrl"] + "/company";
         public async Task<GetCompanyDTO> CreateCompany(CreateCompanyDTO createCompany)
         {
-            var response = await client.PostAsJsonAsync(_baseUrl + "/CreateCompany", createCompany);
+            var response = await client.PostAsJsonAsync(_baseUrl + "/AddCompany", createCompany);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<GetCompanyDTO>();
         }

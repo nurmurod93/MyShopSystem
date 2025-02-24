@@ -4,20 +4,18 @@ using MyShopSystem.API.Services.Intefaceis;
 
 namespace MyShopSystem.API.Controllers
 {
-    [ApiController]
-    [Route("Api[controller]/[action]")]
-    public class WarehouseController(IWarehouceService warehouseService) : ControllerBase
+    public class WarehouseController(IWarehouceService warehouceService) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<List<GetWarehouseListDTO>>> GetAllWarehouse()
         {
-            var warehouses = await warehouseService.GetAllWarehouse();
+            var warehouses = await warehouceService.GetAllWarehouse();
             return Ok(warehouses);
         }
         [HttpGet("{Id}")]
         public async Task<ActionResult<GetWarehouseDTO>> GetWarehouse(int Id)
         {
-            var warehouse = await warehouseService.GetWarehouse(Id);
+            var warehouse = await warehouceService.GetWarehouse(Id);
             if(warehouse == null)
             {
                 return NotFound();
@@ -27,19 +25,19 @@ namespace MyShopSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<GetWarehouseDTO>> CreateWarehouse([FromBody] CreateWarehouseDTO createWarehouse)
         {
-            var newWarehouse = await warehouseService.CreateWarehouse(createWarehouse);
+            var newWarehouse = await warehouceService.CreateWarehouse(createWarehouse);
             return Ok(newWarehouse);
         }
         [HttpPut]
         public async Task<ActionResult> UpdateWarehouse(GetWarehouseDTO updateWarehouse)
         {
-            await warehouseService.UpdateWarehouse(updateWarehouse);
+            await warehouceService.UpdateWarehouse(updateWarehouse);
             return NoContent();
         }
         [HttpDelete("{Id}")]
         public async Task<ActionResult> DeleteWarehouse(int Id)
         {
-            await warehouseService.DeleteWarehouse(Id);
+            await warehouceService.DeleteWarehouse(Id);
             return NoContent();
         }
     }

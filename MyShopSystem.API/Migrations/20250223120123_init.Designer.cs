@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyShopSystem.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250216105052_MyShopSystem")]
-    partial class MyShopSystem
+    [Migration("20250223120123_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,6 +275,12 @@ namespace MyShopSystem.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BranchId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("text");
@@ -284,6 +290,10 @@ namespace MyShopSystem.API.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Warehouses");
                 });
@@ -423,6 +433,21 @@ namespace MyShopSystem.API.Migrations
                     b.Navigation("Store");
                 });
 
+            modelBuilder.Entity("MyShopSystem.API.Data.Warehouse", b =>
+                {
+                    b.HasOne("MyShopSystem.API.Data.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyShopSystem.API.Data.Company", null)
+                        .WithMany("Warehouses")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Branch");
+                });
+
             modelBuilder.Entity("MyShopSystem.API.Data.WarehouseProduct", b =>
                 {
                     b.HasOne("MyShopSystem.API.Data.Product", "Product")
@@ -450,6 +475,8 @@ namespace MyShopSystem.API.Migrations
             modelBuilder.Entity("MyShopSystem.API.Data.Company", b =>
                 {
                     b.Navigation("Branches");
+
+                    b.Navigation("Warehouses");
                 });
 
             modelBuilder.Entity("MyShopSystem.API.Data.Delivery", b =>
