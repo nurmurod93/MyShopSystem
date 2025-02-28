@@ -1,0 +1,66 @@
+﻿@page "/receive"
+@using Commons.Models.Receive
+@using MyShopSystem_UI.Service
+@inject IReceiveService receiveServise
+@inject NavigationManager Navigation
+
+<div class="d-flex justify-content-between">
+    <h3>Maxsulotlar</h3>
+    <a class="btn btn-primary" href="/receive/create">+</a>
+</div>
+
+@if (receive == null)
+{
+    <p>Yuklanmoqda...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Supplier</th>
+                <th>ReceivedDate</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var receives in receive)
+            {
+                <tr>
+                    <td>@receives.ProductName</td>
+                    <td>@receives.Amount</td>
+                    <td>@receives.Price</td>
+                    <td>@receives.Supplier</td>
+                    <td>@receives.ReceivedDate</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditReceive(receives.Id)">Edit</button>
+                        <button class="btn btn-primary" @onclick="() => DeleteReceive(receives.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<GetReceiveListDTO> receive = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        receive = await receiveServise.GetAllReceive();
+    }
+    private void EditReceive(int Id)
+    {
+        Navigation.NavigateTo($"/receive/edit/{Id}");
+    }
+    private async Task DeleteReceive(int Id)
+    {
+        await receiveServise.DeleteReceiveById(Id);
+        receive = await receiveServise.GetAllReceive();
+    }
+
+}

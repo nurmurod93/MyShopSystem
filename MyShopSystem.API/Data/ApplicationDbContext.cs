@@ -20,6 +20,8 @@ namespace MyShopSystem.API.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Receive> Receives { get; set; }
+        public DbSet<Send> Sends { get; set; }
 
     }
 }
