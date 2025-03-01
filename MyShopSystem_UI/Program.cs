@@ -15,6 +15,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 builder.Services.AddScoped<IReceiveService, ReceiveService>();
+builder.Services.AddScoped<ISendService, SendService>();
 
 var app = builder.Build();
 

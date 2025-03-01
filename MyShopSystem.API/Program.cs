@@ -22,6 +22,7 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWarehouceService, WarehouseService>();
 builder.Services.AddScoped<IReceivesService, ReceiveService>();
+builder.Services.AddScoped<ISendService, SendService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,0 +1,59 @@
+﻿@page "/send"
+@using Commons.Models.Send
+@using MyShopSystem_UI.Service
+
+@inject ISendService sendService
+@inject NavigationManager Navigation
+
+<div class="d-flex justify-content-between">
+	<h3>Send Product</h3>
+	<a class="btn btn-primary" href="/send/create">→</a>
+</div>
+
+@if(send == null)
+{
+	<p>Loading...</p>
+}
+else
+{
+	<table>
+		<thead>
+			<tr>
+				<th>Amount</th>
+				<th>Call</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var sends in send)
+			{
+				<tr>
+					<td>@sends.Amount</td>
+					<td>@sends.PhoneNumber</td>
+					<td>@sends.Type</td>
+					<td>
+						<button class="btn btn-primary" @onclick="() => EditSend(sends.Id)" >Edit</button>
+						<button class="btn btn-primary" @onclick="() => DeleteSend(sends.Id)">Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code{
+	private List<GetSendListDTO> send = [];
+	protected override async Task OnInitializedAsync()
+	{
+		send = await sendService.GetAllSend();
+	}
+	private void EditSend(int Id)
+	{
+		Navigation.NavigateTo($"/send/edit/{Id}");
+	}
+	private async Task DeleteSend(int Id)
+	{
+		await sendService.DeleteSend(Id);
+		send = await sendService.GetAllSend();
+	}
+}
