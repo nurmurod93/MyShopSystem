@@ -1,4 +1,9 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject HttpClient Http
+@inject NavigationManager navigation
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">MyShopSystem_UI</a>
     </div>
@@ -65,6 +70,55 @@
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Send
             </NavLink>
         </div>
+
+        @if(IsAuthencaticated)
+        {
+            <div class="naw-item px-3">
+                <button class="naw-link btn btn-danger text-white" @onclick="Logout">Logout</button>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="login">
+                    <span class="bi bi-box-arrow-in-right" aria-hiddin="true"></span> Login
+                </NavLink>
+            </div>
+            <dir class="nav-item px-3">
+                <NavLink class="nav-link" href="register">
+                    <span class="bi bi-person-plus-fill" aria-hidden="true"></span>Register
+                </NavLink>
+            </dir>
+        }
     </nav>
 </div>
+
+@code{
+    private bool IsAuthencaticated = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var token = await localStore.GetItemAsStringAsync("authToken");
+            IsAuthencaticated = !string.IsNullOrEmpty(token);
+            if(!IsAuthencaticated)
+            {
+                navigation.NavigateTo("/login");
+            }
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    private async Task Logout()
+    {
+        await localStore.RemoveItemAsync("authToken");
+        IsAuthencaticated = false;
+        StateHasChanged(); // UI yangilash
+        navigation.NavigateTo("/company");
+    }
+
+}
 

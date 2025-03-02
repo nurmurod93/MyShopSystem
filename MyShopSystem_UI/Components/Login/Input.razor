@@ -1,0 +1,43 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject NavigationManager navigation
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<h3>Login</h3>
+
+@if(!string.IsNullOrEmpty(ErrorMessage))
+{
+	<p style="color:red">@ErrorMessage</p>
+}
+
+<div>
+	<label>Email:</label>
+	<input @bind="Email" type="email"/>
+</div>
+<div>
+	<label>Password:</label>
+	<input @bind="Password" type="password"/>
+</div>
+
+<button @onclick=LoginUser>Login</button>
+
+@code{
+	private string Email { get; set; } = "";
+	private string Password { get; set; } = "";
+	private string ErrorMessage { get; set; } = "";
+
+	private async Task LoginUser()
+	{
+		var response = await Http.PostAsJsonAsync("http://localhost:5432/login", new { Email, Password, });
+		if(response.IsSuccessStatusCode)
+		{
+			var token = await response.Content.ReadAsStringAsync();
+			await localStorage.SetItemAsync("authToken", token); //Token saqlash
+			navigation.NavigateTo("/");
+		}
+		else
+		{
+			ErrorMessage = "Local failed. Plase check your credentials.";
+		}
+	}
+}

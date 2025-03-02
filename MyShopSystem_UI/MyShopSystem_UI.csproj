@@ -10,4 +10,12 @@
     <ProjectReference Include="..\Commons\Commons.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Service\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+  </ItemGroup>
+
 </Project>
